@@ -9,6 +9,7 @@
   <ul>
     <li v-for="(item, key) in items" :key="item.name">
       {{ key + 1 }}. {{ item.name }} ({{ item.number }})
+      <button tpye="button" @click="removeItem(key)">Remove</button>
     </li>
   </ul>
 </template>
@@ -24,6 +25,10 @@ const addItem = () => {
     name: newName.value,
     number: newNumber.value
   });
+}
+
+const removeItem = (key) => {
+  items.value.splice(key, 1);
 }
 
 const items = ref([
