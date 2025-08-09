@@ -35,9 +35,13 @@ onMounted(() => {
 });
 
 const signUp = async () => {
-  let api = `${baseURL}users/sign_up`;
-  console.log(api);
-  const res = await axios.post(api, signUpModel.value);
-  console.log(res);
+  try {
+    let api = `${baseURL}users/sign_up`;
+    const res = await axios.post(api, signUpModel.value);
+    console.log(res);
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 </script>
