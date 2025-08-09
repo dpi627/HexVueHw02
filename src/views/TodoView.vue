@@ -20,6 +20,18 @@
   {{ signInModel }}
   <hr />
   {{ signInRes }}
+
+  <h2>Checkout</h2>
+  <button type="button" @click="checkout">Checkout</button>
+  <div v-if="userModel.status">
+    已登入 {{ userModel.nickname }} ({{ userModel.uid }})
+  </div>
+  <div v-else>
+    未登入
+  </div>
+  <hr />
+  {{ userModel }}
+  {{ checkoutRes }}
 </template>
 
 <script setup>
@@ -31,6 +43,7 @@ const baseURL = 'https://todolist-api.hexschool.io/';
 
 const signUpRes = ref('');
 const signInRes = ref('');
+const checkoutRes = ref('');
 
 const signUpModel = ref({
   email: '',
@@ -68,11 +81,32 @@ const signIn = async () => {
   }
 }
 
+const userModel = ref({
+  status: false,
+  uid: '',
+  nickname: ''
+});
+
+const checkout = async () => {
+
+  const token = document.cookie.replace(/(?:^|.*;\s*)my-token\s*=\s*([^;]*).*$/i, "$1");
+  console.log('Token:', token);
+
+  let api = `${baseURL}users/checkout`;
+  const res = await axios.get(api, {
+    headers: {
+      'Authorization': token
+    }
+  });
+  checkoutRes.value = res;
+  userModel.value = res.data;
+}
+
 const setRandomEmail = () => {
-  let rnd = Math.random().toString(36);
-  signUpModel.value.email = `${rnd.substring(2, 8)}@gmail.com`;
-  signUpModel.value.password = rnd.substring(2, 8);
-  signUpModel.value.nickname = rnd.substring(2, 4);
+  let rnd = Math.random().toString(36).substring(2, 8);
+  signUpModel.value.email = `${rnd}@gmail.com`;
+  signUpModel.value.password = rnd;
+  signUpModel.value.nickname = rnd;
 
   signInModel.value.email = signUpModel.value.email;
   signInModel.value.password = signUpModel.value.password;
@@ -81,4 +115,8 @@ const setRandomEmail = () => {
 onMounted(() => {
   setRandomEmail();
 });
+
+onMounted(async () => {
+  await checkout();
+})
 </script>
