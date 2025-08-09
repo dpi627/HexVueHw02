@@ -93,13 +93,19 @@ const checkout = async () => {
   console.log('Token:', token);
 
   let api = `${baseURL}users/checkout`;
-  const res = await axios.get(api, {
-    headers: {
-      'Authorization': token
-    }
-  });
-  checkoutRes.value = res;
-  userModel.value = res.data;
+  try {
+    const res = await axios.get(api, {
+      headers: {
+        'Authorization': token
+      }
+    });
+    checkoutRes.value = res;
+    userModel.value = res.data;
+  }
+  catch (error) {
+    console.log(error);
+    userModel.value.status = false;
+  }
 }
 
 const setRandomEmail = () => {
