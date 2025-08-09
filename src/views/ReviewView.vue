@@ -26,7 +26,7 @@
         <td>
           <input type="number" v-model.number="item.stock" />
         </td>
-        <td><button type="button" @click="removeItem(key)">Remove</button></td>
+        <td><button type="button" @click="removeItem(item.id)">Remove</button></td>
       </tr>
     </tbody>
   </table>
@@ -46,8 +46,9 @@ const addItem = () => {
   });
 }
 
-const removeItem = (key) => {
-  items.value.splice(key, 1);
+const removeItem = (id) => {
+  const idx = items.value.findIndex(item => item.id === id);
+  items.value.splice(idx, 1);
 }
 
 const items = ref([
