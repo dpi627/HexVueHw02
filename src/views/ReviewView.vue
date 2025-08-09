@@ -44,6 +44,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
 
 const newName = ref('demo');
 const newStock = ref(0);
@@ -81,4 +82,9 @@ onMounted(() => {
   }, 3000);
 });
 
+async function fetchData() {
+  const res = await axios.get('https://randomuser.me/api/');
+  console.log(res);
+}
+fetchData();
 </script>
