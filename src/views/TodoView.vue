@@ -61,6 +61,7 @@ const signIn = async () => {
     const res = await axios.post(api, signInModel.value);
     console.log(res);
     signInRes.value = res.data;
+    document.cookie = `my-token=${res.data.token}; path=/`;
   }
   catch (error) {
     console.error(error);
