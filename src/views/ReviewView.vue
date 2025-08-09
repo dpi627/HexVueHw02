@@ -18,6 +18,14 @@
         <th>Action</th>
       </tr>
     </thead>
+    <tfoot>
+      <tr>
+        <th scope="row" colspan="4">庫存總計</th>
+        <td>
+          {{ totalStock }}
+        </td>
+      </tr>
+    </tfoot>
     <tbody>
       <tr v-for="(item, key) in items" :key="item.id">
         <td>{{ key + 1 }}</td>
@@ -35,10 +43,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const newName = ref('demo');
 const newStock = ref(0);
+
+const items = ref([]);
 
 const addItem = () => {
   items.value.push({
@@ -53,9 +63,22 @@ const removeItem = (id) => {
   items.value.splice(idx, 1);
 }
 
-const items = ref([
-  { id: 1, name: 'Item 1', stock: 10 },
-  { id: 2, name: 'Item 2', stock: 20 },
-  { id: 3, name: 'Item 3', stock: 30 }
-]);
+const totalStock = computed(() => {
+  let sum = 0;
+  items.value.forEach((item) => {
+    sum += item.stock;
+  });
+  return sum;
+})
+
+onMounted(() => {
+  setTimeout(() => {
+    items.value = [
+      { id: 1, name: 'Item 1', stock: 10 },
+      { id: 2, name: 'Item 2', stock: 20 },
+      { id: 3, name: 'Item 3', stock: 30 }
+    ]
+  }, 3000);
+});
+
 </script>
