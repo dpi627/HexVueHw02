@@ -8,6 +8,8 @@
   <button type="button" @click="setRandomEmail">Random</button>
   <br />
   {{ signUpModel }}
+  <br />
+  {{ signUpRes }}
 </template>
 
 <script setup>
@@ -16,6 +18,7 @@ import axios from 'axios';
 
 const pageTitle = ref('Todo');
 const baseURL = 'https://todolist-api.hexschool.io/';
+const signUpRes = ref('');
 
 const signUpModel = ref({
   email: '',
@@ -39,6 +42,7 @@ const signUp = async () => {
     let api = `${baseURL}users/sign_up`;
     const res = await axios.post(api, signUpModel.value);
     console.log(res);
+    signUpRes.value = res.data;
   }
   catch (error) {
     console.error(error);
