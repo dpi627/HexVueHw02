@@ -6,12 +6,15 @@
       <div class="col-md-6">
         <h2>Sign Up</h2>
         <div class="mb-3">
+          帳號
           <input type="text" class="form-control" placeholder="Email" v-model="signUpModel.email">
         </div>
         <div class="mb-3">
+          密碼
           <input type="password" class="form-control" placeholder="Password" v-model="signUpModel.password">
         </div>
         <div class="mb-3">
+          暱稱
           <input type="text" class="form-control" placeholder="Nickname" v-model="signUpModel.nickname">
         </div>
         <button type="button" class="btn btn-primary me-2" @click="signUp">Sign Up</button>
@@ -25,9 +28,11 @@
       <div class="col-md-6">
         <h2>Sign In</h2>
         <div class="mb-3">
+          帳號
           <input type="text" class="form-control" placeholder="Email" v-model="signInModel.email">
         </div>
         <div class="mb-3">
+          密碼
           <input type="password" class="form-control" placeholder="Password" v-model="signInModel.password">
         </div>
         <button type="button" class="btn btn-success" @click="signIn">Sign In</button>
@@ -60,7 +65,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-const pageTitle = ref('Todo');
+const pageTitle = ref('Sign Up and Sign In');
 const baseURL = 'https://todolist-api.hexschool.io/';
 
 const signUpRes = ref('');
@@ -140,11 +145,8 @@ const setRandomEmail = () => {
   signInModel.value.password = signUpModel.value.password;
 }
 
-onMounted(() => {
-  setRandomEmail();
-});
-
 onMounted(async () => {
+  setRandomEmail();
   await checkout();
-})
+});
 </script>
