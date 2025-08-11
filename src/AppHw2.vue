@@ -1,37 +1,59 @@
 <template>
-  <h1>{{ pageTitle }}</h1>
+  <div class="container mt-4">
+    <h1 class="mb-4">{{ pageTitle }}</h1>
 
-  <h2>Sign Up</h2>
-  <input type="text" v-model="signUpModel.email">
-  <input type="password" v-model="signUpModel.password">
-  <input type="text" v-model="signUpModel.nickname">
-  <button type="button" @click="signUp">Sign Up</button>
-  <button type="button" @click="setRandomEmail">Random</button>
-  <hr />
-  {{ signUpModel }}
-  <hr />
-  {{ signUpRes }}
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Sign Up</h2>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Email" v-model="signUpModel.email">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Password" v-model="signUpModel.password">
+        </div>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Nickname" v-model="signUpModel.nickname">
+        </div>
+        <button type="button" class="btn btn-primary me-2" @click="signUp">Sign Up</button>
+        <button type="button" class="btn btn-secondary" @click="setRandomEmail">Random</button>
+        <hr />
+        <pre class="bg-light p-2 small">{{ signUpModel }}</pre>
+        <hr />
+        <pre class="bg-light p-2 small">{{ signUpRes }}</pre>
+      </div>
 
-  <h2>Sign In</h2>
-  <input type="text" v-model="signInModel.email">
-  <input type="password" v-model="signInModel.password">
-  <button type="button" @click="signIn">Sign In</button>
-  <hr />
-  {{ signInModel }}
-  <hr />
-  {{ signInRes }}
+      <div class="col-md-6">
+        <h2>Sign In</h2>
+        <div class="mb-3">
+          <input type="text" class="form-control" placeholder="Email" v-model="signInModel.email">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" placeholder="Password" v-model="signInModel.password">
+        </div>
+        <button type="button" class="btn btn-success" @click="signIn">Sign In</button>
+        <hr />
+        <pre class="bg-light p-2 small">{{ signInModel }}</pre>
+        <hr />
+        <pre class="bg-light p-2 small">{{ signInRes }}</pre>
+      </div>
+    </div>
 
-  <h2>Checkout</h2>
-  <button type="button" @click="checkout">Checkout</button>
-  <div v-if="userModel.status">
-    已登入 {{ userModel.nickname }} ({{ userModel.uid }})
+    <div class="mt-4">
+      <h2>Checkout</h2>
+      <button type="button" class="btn btn-info" @click="checkout">Checkout</button>
+      <div class="mt-3">
+        <div v-if="userModel.status" class="alert alert-success">
+          已登入 {{ userModel.nickname }} ({{ userModel.uid }})
+        </div>
+        <div v-else class="alert alert-warning">
+          未登入
+        </div>
+      </div>
+      <hr />
+      <pre class="bg-light p-2 small">{{ userModel }}</pre>
+      <pre class="bg-light p-2 small">{{ checkoutRes }}</pre>
+    </div>
   </div>
-  <div v-else>
-    未登入
-  </div>
-  <hr />
-  {{ userModel }}
-  {{ checkoutRes }}
 </template>
 
 <script setup>
